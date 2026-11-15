@@ -1,0 +1,49 @@
+name: Telegram CI Notify
+description: >-
+  Send one plain-text Telegram message summarising a GitHub event — push, pull
+  request, review, comment, branch/tag, release — or any custom text you pass in.
+author: Amine Mabrouk
+branding:
+  icon: send
+  color: blue
+
+inputs:
+  message:
+    description: >-
+      Text to send. Leave empty to auto-generate a summary of the current
+      GitHub event. Plain text only — Markdown/HTML is not parsed.
+    required: false
+    default: ""
+  chat-id:
+    description: >-
+      Target chat id or @channel. Overrides the TELEGRAM_TO environment
+      variable. Use this only for repos that notify more than one chat.
+    required: false
+    default: ""
+  silent:
+    description: Send without a notification sound.
+    required: false
+    default: "false"
+  project-name:
+    description: >-
+      Friendly name shown instead of owner/repo (useful when one Telegram chat
+      follows several repositories).
+    required: false
+    default: ""
+  dry-run:
+    description: Print the message in the job log instead of sending it.
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: Send Telegram message
+      shell: bash
+      env:
+        INPUT_MESSAGE: ${{ inputs.message }}
+        INPUT_CHAT_ID: ${{ inputs.chat-id }}
+        INPUT_SILENT: ${{ inputs.silent }}
+        INPUT_PROJECT_NAME: ${{ inputs.project-name }}
+        NOTIFY_DRY_RUN: ${{ inputs.dry-run }}
+      run: bash "${{ github.action_path }}/scripts/notify.sh"

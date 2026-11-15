@@ -1,0 +1,32 @@
+# Option B — reuse the workflow instead of copying a file.
+#
+# Same behaviour as templates/telegram-notify.yml, but the action step lives
+# upstream: `git pull` this repo's changes into every project by bumping the tag.
+#
+# Save as .github/workflows/telegram-notify.yml and add the two secrets:
+#   TELEGRAM_TOKEN, TELEGRAM_TO
+name: Telegram Notify
+
+on:
+  push:
+  pull_request:
+    types: [opened, reopened, synchronize, closed, ready_for_review]
+  pull_request_review:
+    types: [submitted]
+  issue_comment:
+    types: [created]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    uses: AmineMabrouk17/telegram-ci-notify/.github/workflows/notify.yml@v1
+    secrets: inherit
+    # Optional overrides:
+    # with:
+    #   project-name: Cast n Cue
+    #   silent: true

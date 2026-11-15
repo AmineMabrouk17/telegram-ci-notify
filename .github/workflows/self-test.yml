@@ -1,0 +1,50 @@
+name: Self test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bash:
+    name: shellcheck + test suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Shellcheck
+        run: shellcheck scripts/*.sh
+
+      - name: Run the offline test suite
+        run: bash scripts/test-local.sh
+
+  workflows:
+    name: actionlint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker://rhysd/actionlint:latest
+        with:
+          args: -color
+
+  action:
+    name: composite action wiring
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      # Exercises action.yml end to end: input mapping, event parsing and the
+      # dry-run path. Nothing is sent because dry-run is on.
+      - uses: ./
+        with:
+          dry-run: "true"
+          project-name: telegram-ci-notify
+        env:
+          TELEGRAM_TOKEN: dummy
+          TELEGRAM_TO: dummy

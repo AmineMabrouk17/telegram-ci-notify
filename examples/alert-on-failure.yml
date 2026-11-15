@@ -1,0 +1,39 @@
+# Option C — send a custom message from an existing workflow.
+#
+# The action can post any text, so it also works as a CI failure/deploy alert.
+# Add this to a workflow that already has a `ci` or `deploy` job; the alert job
+# only runs when something failed.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+
+  alert-on-failure:
+    name: Alert on failure
+    needs: [ci]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: AmineMabrouk17/telegram-ci-notify@v1
+        with:
+          message: |
+            ❌ CI failed
+            📦 ${{ github.repository }}
+            🌿 ${{ github.ref_name }}
+            👤 ${{ github.actor }}
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}

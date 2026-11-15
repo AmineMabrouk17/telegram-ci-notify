@@ -1,0 +1,12 @@
+{
+  "action": "submitted",
+  "review": {
+    "state": "approved",
+    "html_url": "https://github.com/AmineMabrouk17/My-Portfolio/pull/42#pullrequestreview-1"
+  },
+  "pull_request": {
+    "number": 42,
+    "title": "feat: add dark mode",
+    "html_url": "https://github.com/AmineMabrouk17/My-Portfolio/pull/42"
+  }
+}
