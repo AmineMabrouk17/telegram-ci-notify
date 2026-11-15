@@ -1,0 +1,15 @@
+{
+  "ref": "refs/heads/main",
+  "ref_type": "branch",
+  "before": "1111111111111111111111111111111111111111",
+  "after": "2222222222222222222222222222222222222222",
+  "compare": "https://github.com/owner/repo/compare/1111111...2222222",
+  "head_commit": {
+    "id": "2222222222222222222222222222222222222222",
+    "message": "docs: tidy the readme",
+    "url": "https://github.com/owner/repo/commit/2222222222222222222222222222222222222222"
+  },
+  "commits": [
+    { "id": "2222222222222222222222222222222222222222" }
+  ]
+}

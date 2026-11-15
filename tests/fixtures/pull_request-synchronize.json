@@ -1,0 +1,14 @@
+{
+  "action": "synchronize",
+  "pull_request": {
+    "number": 42,
+    "title": "feat: add dark mode",
+    "html_url": "https://github.com/owner/repo/pull/42",
+    "head": { "ref": "feat/dark-mode", "sha": "abc1234def5678901234567890abcdef12345678" },
+    "base": { "ref": "main" },
+    "commits": 3,
+    "additions": 20,
+    "deletions": 5,
+    "merged": false
+  }
+}

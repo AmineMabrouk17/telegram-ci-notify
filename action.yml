@@ -1,7 +1,7 @@
 name: Telegram CI Notify
 description: >-
-  Send one plain-text Telegram message summarising a GitHub event — push, pull
-  request, review, comment, branch/tag, release — or any custom text you pass in.
+  Send one Telegram message summarising a GitHub event — push, pull request,
+  review, comment, branch/tag, release — with buttons back to GitHub.
 author: Amine Mabrouk
 branding:
   icon: send
@@ -11,7 +11,7 @@ inputs:
   message:
     description: >-
       Text to send. Leave empty to auto-generate a summary of the current
-      GitHub event. Plain text only — Markdown/HTML is not parsed.
+      GitHub event. Plain text: `<`, `>` and `&` are escaped for you.
     required: false
     default: ""
   chat-id:
@@ -21,17 +21,43 @@ inputs:
     required: false
     default: ""
   silent:
-    description: Send without a notification sound.
+    description: >-
+      auto (default) rings only when a pull request is opened or closed;
+      true mutes everything; false rings for every event.
     required: false
-    default: "false"
+    default: "auto"
   project-name:
     description: >-
       Friendly name shown instead of owner/repo (useful when one Telegram chat
       follows several repositories).
     required: false
     default: ""
+  format:
+    description: >-
+      html (default) for bold headlines and monospace SHAs, plain to send
+      the same text with no markup at all.
+    required: false
+    default: "html"
+  preview-url:
+    description: Exact preview URL for this pull request. Wins over preview-url-template.
+    required: false
+    default: ""
+  preview-url-template:
+    description: >-
+      URL pattern for the Preview button, e.g.
+      https://pr-{number}-my-worker.my-subdomain.workers.dev. Placeholders:
+      {number}, {repo}, {branch}, {sha}, {actor}. No template, no button.
+    required: false
+    default: ""
+  images-url-template:
+    description: >-
+      URL pattern for the Screenshots button, e.g.
+      https://image.thum.io/get/width/1200/crop/900/{preview_url}. Also
+      understands {preview_url}; needs a preview URL to resolve.
+    required: false
+    default: ""
   dry-run:
-    description: Print the message in the job log instead of sending it.
+    description: Print the message and keyboard in the job log instead of sending.
     required: false
     default: "false"
 
@@ -45,5 +71,9 @@ runs:
         INPUT_CHAT_ID: ${{ inputs.chat-id }}
         INPUT_SILENT: ${{ inputs.silent }}
         INPUT_PROJECT_NAME: ${{ inputs.project-name }}
+        INPUT_FORMAT: ${{ inputs.format }}
+        INPUT_PREVIEW_URL: ${{ inputs.preview-url }}
+        INPUT_PREVIEW_URL_TEMPLATE: ${{ inputs.preview-url-template }}
+        INPUT_IMAGES_URL_TEMPLATE: ${{ inputs.images-url-template }}
         NOTIFY_DRY_RUN: ${{ inputs.dry-run }}
       run: bash "${{ github.action_path }}/scripts/notify.sh"

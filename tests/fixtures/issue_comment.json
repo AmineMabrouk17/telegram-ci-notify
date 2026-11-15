@@ -3,10 +3,10 @@
   "issue": {
     "number": 42,
     "title": "feat: add dark mode",
-    "pull_request": { "url": "https://api.github.com/repos/AmineMabrouk17/My-Portfolio/pulls/42" }
+    "pull_request": { "url": "https://api.github.com/repos/owner/repo/pulls/42" }
   },
   "comment": {
     "body": "Looks good, but can we\nsplit this into two commits? It is a bit long.",
-    "html_url": "https://github.com/AmineMabrouk17/My-Portfolio/pull/42#issuecomment-1"
+    "html_url": "https://github.com/owner/repo/pull/42#issuecomment-1"
   }
 }

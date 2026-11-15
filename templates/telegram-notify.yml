@@ -47,6 +47,17 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: AmineMabrouk17/telegram-ci-notify@v1
+        # Optional. Every input has a sane default; delete what you do not need.
+        # with:
+        #   # Only ring the phone for PRs you have to act on (this is the default).
+        #   silent: auto
+        #   # Show a friendly name instead of owner/repo in the message.
+        #   project-name: My Project
+        #   # Preview + Screenshots buttons: the pattern is filled per PR.
+        #   preview-url-template: https://pr-{number}-my-worker.my-subdomain.workers.dev
+        #   images-url-template: https://image.thum.io/get/width/1200/crop/900/{preview_url}
+        #   # Debug without sending anything:
+        #   dry-run: true
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}

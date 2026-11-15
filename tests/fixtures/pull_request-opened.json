@@ -3,7 +3,7 @@
   "pull_request": {
     "number": 42,
     "title": "feat: add dark mode",
-    "html_url": "https://github.com/AmineMabrouk17/My-Portfolio/pull/42",
+    "html_url": "https://github.com/owner/repo/pull/42",
     "head": { "ref": "feat/dark-mode", "sha": "abc1234def5678901234567890abcdef12345678" },
     "base": { "ref": "main" },
     "commits": 2,

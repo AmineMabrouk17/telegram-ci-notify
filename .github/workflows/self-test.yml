@@ -39,12 +39,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Exercises action.yml end to end: input mapping, event parsing and the
-      # dry-run path. Nothing is sent because dry-run is on.
+      # Exercises action.yml end to end: input mapping, event parsing, buttons
+      # and the dry-run path. Nothing is sent because dry-run is on.
       - uses: ./
         with:
           dry-run: "true"
           project-name: telegram-ci-notify
+          preview-url-template: https://pr-{number}-preview.example.dev
+          images-url-template: https://shots.example.dev/{preview_url}
         env:
           TELEGRAM_TOKEN: dummy
           TELEGRAM_TO: dummy

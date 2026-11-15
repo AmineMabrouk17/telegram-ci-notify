@@ -1,6 +1,6 @@
-# Option C — send a custom message from an existing workflow.
+# Custom messages — CI and deploy alerts.
 #
-# The action can post any text, so it also works as a CI failure/deploy alert.
+# The action can post any text, so it doubles as a failure alert.
 # Add this to a workflow that already has a `ci` or `deploy` job; the alert job
 # only runs when something failed.
 name: CI
